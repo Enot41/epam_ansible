@@ -4,7 +4,7 @@
   - name: Add config
     lineinfile:
       path: /etc/default/grub
-      regexp: '^(GRUB_CMDLINE_LINUX=(?!.* audit)\"[^\"]+)(\".*)' 
+      regexp: '^(GRUB_CMDLINE_LINUX=(?!.* net.ifnames=0 biosdevname=0)\"[^\"]+)(\".*)' 
       line: '\1 net.ifnames=0 biosdevname=0\2'
       backrefs: yes
   - name: Run command
