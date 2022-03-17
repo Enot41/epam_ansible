@@ -1,0 +1,22 @@
+- name: Delete and Configured Apache
+  hosts: node1 
+  tasks:
+  - name: Delete Apache
+    yum:
+      name:
+      - httpd
+      state: absent
+  - name: Delete index.html
+    file:
+      path: /var/www/html/index.html
+      state: absent
+  - name: Disabled Port
+    firewalld:
+      port: 80/tcp
+      permanent: true
+      state: disabled
+  - name: Restart Firewalld
+    service:
+      name: firewalld
+      state: reloaded
+      

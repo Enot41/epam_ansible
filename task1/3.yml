@@ -1,0 +1,11 @@
+- name: Edit grub file 
+  hosts: node1 
+  tasks:
+  - name: Add config
+    lineinfile:
+      path: /etc/default/grub
+      regexp: '^(GRUB_CMDLINE_LINUX=(?!.* audit)\"[^\"]+)(\".*)' 
+      line: '\1 net.ifnames=0 biosdevname=0\2'
+      backrefs: yes
+  - name: Run command
+    shell: grub2-mkconfig    

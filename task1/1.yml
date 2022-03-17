@@ -1,0 +1,31 @@
+- name: Install and Configured Apache
+  hosts: node1 
+  tasks:
+  - name: Install Apache
+    yum:
+      name:
+      - httpd
+      state: present
+      update_cache: yes     
+  - name: Start Apache
+    service:
+      name: httpd
+      state: restarted
+    register: service_state
+  - name: State Apache Service
+    debug:
+      var: service_state.state
+  - name: Copy nginx conf
+    copy:
+      content: "Welcome to my web server"
+      dest: /var/www/html/index.html
+  - name: Enabled Port
+    firewalld:
+      port: 80/tcp
+      permanent: true
+      state: enabled
+  - name: Restart Firewalld
+    service:
+      name: firewalld
+      state: reloaded
+      
