@@ -1,0 +1,17 @@
+- name: Add Users 
+  hosts: node1 
+  vars_files:
+    - secret.yml
+  tasks:
+  - name: Add Users
+    user:
+      name: "{{ item }}"
+      password: "{{ password | password_hash('sha512') }}"
+      comment: '{{ item }}@example.com'
+      shell: /bin/bash
+      createhome: yes
+      state: present
+    with_items: 
+      - Alice
+      - Bob
+      - Carol 
