@@ -1,0 +1,14 @@
+- name: Install and Configured Apache
+  hosts: node1 
+  tasks:
+  - name: Populate service facts
+    ansible.builtin.service_facts:
+  - name: Print service facts
+    ansible.builtin.debug:
+      var: ansible_facts.services["httpd.service"]['state']
+  - name: 
+    debug:
+      msg:
+      - "Privet" 
+    when: ansible_facts.services["httpd.service"]['state'] == 'running'
+      

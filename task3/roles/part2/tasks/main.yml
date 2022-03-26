@@ -1,0 +1,45 @@
+---
+# tasks file for part2
+- name: Install Package
+  yum:
+    name:
+    - vsftpd
+    - libsemanage-python
+    - libselinux-python
+    state: present
+    update_cache: yes
+- name: Create a directory upload
+  file:
+    path: /var/ftp/pub/upload
+    state: directory
+    mode: '0777'
+- name: Change vsftpd.conf
+  template:
+    src: vsftpd.conf.j2
+    dest: /etc/vsftpd/vsftpd.conf
+  notify:
+    - restart_vsftpd
+- name: Enabled Port
+  firewalld:
+    service: ftp
+    permanent: true
+    state: enabled
+  notify: 
+    - reloaded_firewalld
+- name: Enabled Port
+  firewalld:
+    port: 15000-15500/tcp
+    permanent: true
+    state: enabled
+  notify:
+    - reloaded_firewalld
+- name: Set ftpd_anon_write in seboolean
+  ansible.posix.seboolean:
+    name: ftpd_anon_write
+    state: yes
+    persistent: yes
+- name: Set ftpd_full_access in seboolean
+  ansible.posix.seboolean:
+    name: ftpd_full_access
+    state: yes
+    persistent: yes

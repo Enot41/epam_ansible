@@ -1,0 +1,11 @@
+---
+# handlers file for part1
+- name: restart_httpd
+  service:
+    name: httpd
+    state: restarted
+    enabled: yes
+- name: reloaded_firewalld
+  service:
+    name: firewalld
+    state: reloaded

@@ -1,0 +1,11 @@
+---
+# vars file for part1
+# VARS for vsftpd.conf
+anon_upload_enable: YES 
+no_anon_password: YES
+anonymous_enable: YES
+local_enable: YES
+write_enable: YES
+anon_root: /var/ftp/
+listen: YES
+
