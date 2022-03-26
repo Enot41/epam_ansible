@@ -7,5 +7,8 @@
       regexp: '^(GRUB_CMDLINE_LINUX=(?!.* net.ifnames=0 biosdevname=0)\"[^\"]+)(\".*)' 
       line: '\1 net.ifnames=0 biosdevname=0\2'
       backrefs: yes
-  - name: Run command
-    shell: grub2-mkconfig    
+    notify:
+      - grub2-mkconfig
+  handlers:
+    - name: grub2-mkconfig
+      shell: grub2-mkconfig    

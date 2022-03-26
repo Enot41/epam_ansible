@@ -1,9 +1,0 @@
-- name: Edit grub file 
-  hosts: node1 
-  vars_files:
-    - user_vars.yml
-  tasks:
-    - name: print array values
-      debug:
-        msg: User {{ item.value.username }} has homedirectory {{ item.value.homedir }} 
-      with_dict: "{{ users }}"
